@@ -4,7 +4,6 @@ class VObs {
         this.gameScreen = gameScreen
         this.playerPos = playerPos
 
-
         this.vObsSize = {
             w: 40,
             h: 80
@@ -36,12 +35,10 @@ class VObs {
         this.gameScreen.appendChild(this.vObsElement)
 
     }
+
     updatePos(playerPos) {
         if (playerPos > this.gameSize.w / 2) {
-            console.log("MITAD!!!")
-            console.log("antes", this.vObsPos.l)
             this.vObsPos.l -= 20
-            console.log("despues", this.vObsPos.l)
         } else {
             this.vObsPos.l = 0
         }
@@ -50,4 +47,5 @@ class VObs {
     updatePosition() {
         this.vObsElement.style.left = `${this.vObsPos.l}px`
     }
+
 }

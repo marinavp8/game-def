@@ -5,7 +5,7 @@ class Platform {
 
         this.platformSize = {
             w: 200,
-            h: 20
+            h: 70
         }
 
         this.platformPos = {
@@ -28,6 +28,17 @@ class Platform {
 
         this.gameScreen.appendChild(this.platformElement)
     }
-
+    updatePos(playerPos) {
+        console.log("entro con player pos", playerPos)
+        if (playerPos > this.gameSize.w / 2) {
+            this.platformPos.l -= 20
+        } else {
+            this.platformPos.l = 0
+        }
+        this.updatePosition()
+    }
+    updatePosition() {
+        this.platformElement.style.left = `${this.platformPos.l}px`
+    }
 
 }

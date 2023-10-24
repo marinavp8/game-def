@@ -6,7 +6,7 @@ class Player {
 
         this.playerSize = {
             w: 60,
-            h: 100
+            h: 60
         },
             this.playerPos = {
                 l: 50,
@@ -17,7 +17,7 @@ class Player {
         this.playerVel = {
             l: 0,
             t: 0,
-            g: 0.4
+            g: 0.5
         }
 
         this.init()
@@ -38,11 +38,9 @@ class Player {
 
         this.gameScreen.appendChild(this.playerElement)
 
-        console.log(this.playerPos)
-
     }
 
-    move() {
+    move(keys) {
         if (this.playerPos.t < this.playerPos.base) {
             this.playerPos.t += this.playerVel.t
             this.playerVel.t += this.playerVel.g
@@ -50,6 +48,8 @@ class Player {
             this.playerPos.t = this.playerPos.base
             this.playerVel.t = 1
         }
+        keys.moveR.pressed && this.moveRight()
+        keys.moveL.pressed && this.moveLeft()
         this.updatePosition()
 
     }
@@ -65,14 +65,16 @@ class Player {
         }
     }
     moveRight() {
-        this.playerPos.l += 50
-        this.playerVel.l += 40
+        if (this.playerPos.l < this.gameSize.w / 2) {
+            this.playerPos.l += 10
+            this.playerVel.l += 20
+        }
 
     }
     moveLeft() {
         if (this.playerPos.l >= 0) {
-            this.playerPos.l -= 30
-            this.playerVel.l -= 40
+            this.playerPos.l -= 10
+            this.playerVel.l -= 20
         }
     }
     getPosition() {
@@ -85,3 +87,4 @@ class Player {
         this.isMoving = false
     }
 }
+

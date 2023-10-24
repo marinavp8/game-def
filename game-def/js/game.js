@@ -53,14 +53,12 @@ const Game = {
         document.addEventListener("keydown", e => {
             switch (e.code) {
                 case this.keys.jump:
-                    console.log("jump")
                     this.player.jump()
                     break;
                 case this.keys.moveR:
                     this.vObs.moveLeft()
                     break
                 case this.keys.moveL:
-                    console.log("memuevo a la izquierda")
                     this.player.moveLeft()
                     break
 

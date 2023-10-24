@@ -50,10 +50,7 @@ class Background {
 
     updatePos(playerPos) {
         if (playerPos > this.gameSize.w / 2) {
-            console.log("MITAD!!!")
-            console.log("antes", this.backgroundPos.l)
-            this.backgroundPos.l -= 20
-            console.log("despues", this.backgroundPos.l)
+            this.backgroundPos.l -= 7
         } else {
             this.backgroundPos.l = 0
         }
