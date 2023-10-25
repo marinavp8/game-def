@@ -157,7 +157,7 @@ const Game = {
     drawAll() {
         this.player.move(this.keys)
         this.background.move()
-        this.player.moveFrames(this.framesIndex)
+        this.player.moveFrames(this.framesCounter)
 
     },
 
@@ -173,9 +173,6 @@ const Game = {
                 return this.gameOver()
             }
         }),
-
-
-
             this.platforms.forEach((e) => {
                 if (this.player.playerPos.l + this.player.playerSize.w >= e.platformPos.l &&
                     this.player.playerPos.l <= e.platformPos.l + e.platformSize.w &&

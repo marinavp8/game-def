@@ -43,7 +43,7 @@ class Player {
         this.playerElement.style.backgroundImage = `url(./img/monster.png)`
         this.playerElement.style.backgroundSize = "360px 60px ";
 
-        this.playerElement.style.backgroundSize = `${this.playerSize.t} ${this.playerSize.h}`;
+        // this.playerElement.style.backgroundSize = `${this.playerSize.t} ${this.playerSize.h}`;
 
 
         this.playerElement.style.overflow = "hidden"
@@ -68,12 +68,12 @@ class Player {
         this.updatePosition()
 
     }
-    moveFrames(framesIndex) {
-        this.animateSprite(framesIndex)
+    moveFrames(framesCounter) {
+        this.animateSprite(framesCounter)
         this.updatePosition()
     }
-    animateSprite(framesIndex) {
-        if (framesIndex % this.playerSprite.frameSpeed == 0) {
+    animateSprite(framesCounter) {
+        if (framesCounter % this.playerSprite.frameSpeed == 0) {
             this.playerSprite.currentFrame = 0
         }
         if (this.playerSprite.currentFrame >= this.playerSprite.totalFrames) {
