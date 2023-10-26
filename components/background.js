@@ -61,6 +61,7 @@ class Background {
     }
 
     updatePos(playerPos) {
+
         if (playerPos > this.gameSize.w / 2) {
             this.backgroundPos.l -= 3
             this.backgroundPos2.l -= 3

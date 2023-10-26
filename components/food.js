@@ -5,6 +5,7 @@ class Food {
         this.foodPosL = foodPosL
         this.foodPosT = foodPosT
 
+
         this.foodSize = {
             w: 50,
             h: 80
@@ -41,4 +42,18 @@ class Food {
 
         this.gameScreen.appendChild(this.foodElement)
     }
+
+    updatePos(playerPos) {
+
+        if (playerPos > this.gameSize.w / 2) {
+            this.foodPos.l -= 7
+        } else {
+            this.foodPos.l = 0
+        }
+        this.updatePosition()
+    }
+    updatePosition() {
+        this.foodElement.style.left = `${this.foodPos.l}px`
+    }
+
 }

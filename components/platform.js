@@ -47,6 +47,8 @@ class Platform {
         this.gameScreen.appendChild(this.platformElement)
     }
     updatePos(playerPos) {
+
+
         if (playerPos > this.gameSize.w / 2) {
             this.platformPos.l -= 7
         } else {

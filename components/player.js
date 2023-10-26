@@ -1,8 +1,8 @@
 class Player {
     constructor(gameSize, gameScreen) {
         this.gameSize = gameSize
-        this.gameScreen = gameScreen,
-            this.isMoving = false
+        this.gameScreen = gameScreen
+        this.isMoving = false
 
         this.playerSize = {
             w: 60,
@@ -11,7 +11,7 @@ class Player {
             this.playerPos = {
                 l: 50,
                 t: this.gameSize.h - this.playerSize.h - 100,
-                base: this.gameSize.h - this.playerSize.h - 100
+                //base: this.gameSize.h - this.playerSize.h - 130
             }
 
         this.playerVel = {
@@ -23,7 +23,7 @@ class Player {
             backgroundPositionX: 0,
             totalFrames: 6,
             currentFrame: 1,
-            frameSpeed: 4
+            frameSpeed: 7
         }
         this.init()
 
@@ -56,6 +56,7 @@ class Player {
     }
 
     move(keys) {
+
         if (this.playerPos.t < this.playerPos.base) {
             this.playerPos.t += this.playerVel.t
             this.playerVel.t += this.playerVel.g
@@ -70,19 +71,27 @@ class Player {
     }
     moveFrames(framesCounter) {
         this.animateSprite(framesCounter)
-        this.updatePosition()
+        this.updateSprite()
     }
     animateSprite(framesCounter) {
+
         if (framesCounter % this.playerSprite.frameSpeed == 0) {
-            this.playerSprite.currentFrame = 0
+            this.playerSprite.currentFrame++
         }
         if (this.playerSprite.currentFrame >= this.playerSprite.totalFrames) {
             this.playerSprite.currentFrame = 0
         }
         this.playerSprite.backgroundPositionX = -this.playerSize.h * this.playerSprite.currentFrame
+
+
+        this.updateSprite()
+    }
+    updateSprite() {
+        this.playerElement.style.backgroundPositionX = `${this.playerSprite.backgroundPositionX}px`
     }
 
     updatePosition() {
+
         this.playerElement.style.left = `${this.playerPos.l}px`
         this.playerElement.style.top = `${this.playerPos.t}px`
     }
@@ -101,8 +110,8 @@ class Player {
     }
     moveLeft() {
         if (this.playerPos.l >= 0) {
-            this.playerPos.l -= 10
-            this.playerVel.l -= 20
+            this.playerPos.l -= 5
+            this.playerVel.l -= 15
         }
     }
     getPosition() {

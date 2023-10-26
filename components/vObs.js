@@ -58,6 +58,7 @@ class VObs {
     }
 
     updatePos(playerPos) {
+
         if (playerPos > this.gameSize.w / 2) {
             this.vObsPos.l -= 7
         } else {
