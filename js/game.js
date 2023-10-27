@@ -109,11 +109,11 @@ const Game = {
 
         this.foods.push(new Food(this.gameSize, this.gameScreen, 900, 400))
         this.foods.push(new Food(this.gameSize, this.gameScreen, 1400, 350))
-        this.foods.push(new Food(this.gameSize, this.gameScreen, 2300, 400))
+        this.foods.push(new Food(this.gameSize, this.gameScreen, 2150, 400))
         this.foods.push(new Food(this.gameSize, this.gameScreen, 2400, 100))
         this.foods.push(new Food(this.gameSize, this.gameScreen, 2750, 325))
         this.foods.push(new Food(this.gameSize, this.gameScreen, 3100, 100))
-        this.foods.push(new Food(this.gameSize, this.gameScreen, 3500, 200))
+        this.foods.push(new Food(this.gameSize, this.gameScreen, 3500, 350))
         this.foods.push(new Food(this.gameSize, this.gameScreen, 3950, 300))
         this.foods.push(new Food(this.gameSize, this.gameScreen, 4400, 200))
         this.foods.push(new Food(this.gameSize, this.gameScreen, 4700, 0))
@@ -259,7 +259,7 @@ const Game = {
     },
 
     gameOver() {
-        // alert("moriste wey")
+        alert("moriste wey")
     }
 
 }
