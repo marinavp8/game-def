@@ -57,10 +57,21 @@ class VObs {
 
     }
 
-    updatePos(playerPos) {
+    goLeft(playerPos) {
+
 
         if (playerPos > this.gameSize.w / 2) {
             this.vObsPos.l -= 7
+
+        } else {
+            this.vObsPos.l = 0
+        }
+        this.updatePosition()
+    }
+    goRight(playerPos) {
+        if (playerPos < 200) {
+            this.vObsPos.l += 7
+
         } else {
             this.vObsPos.l = 0
         }

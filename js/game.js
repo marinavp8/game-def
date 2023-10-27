@@ -1,6 +1,6 @@
 const Game = {
     gameScreen: document.querySelector("#game-screen"),
-    score: document.getElementById('scoreCounter').textContent = "Score: " + this.counterPoints,
+
 
     gameSize: {
         w: window.innerWidth,
@@ -8,13 +8,21 @@ const Game = {
     },
 
     framesCounter: 0,
+    scoreCounter: 0,
+
 
     background: undefined,
     player: undefined,
+    score: undefined,
     vObs: [],
     platforms: [],
     foods: [],
-    counterPoints: 0,
+
+
+    createAudio() {
+        let audioStart = new Audio();
+        audioStart.src = "../music/music.wav"
+    },
 
     keys: {
         jump: { code: "KeyW", pressed: false },
@@ -34,6 +42,7 @@ const Game = {
         this.setDimensions()
         this.setEventListeners()
         this.start()
+        this.createAudio()
     },
 
     start() {
@@ -44,6 +53,7 @@ const Game = {
     createElements() {
         this.player = new Player(this.gameSize, this.gameScreen)
         this.background = new Background(this.gameSize, this.gameScreen, this.player.playerPos)
+        this.score = new Score(this.gameSize, this.gameScreen, this.scoreCounter)
         this.vObs.push(new VObs(this.gameSize, this.gameScreen, this.player.playerPos, 800, 645, 645))
         this.vObs.push(new VObs(this.gameSize, this.gameScreen, this.player.playerPos, 1200, 645, 645))
         this.vObs.push(new VObs(this.gameSize, this.gameScreen, this.player.playerPos, 1300, 420, 500))
@@ -99,17 +109,17 @@ const Game = {
 
         this.foods.push(new Food(this.gameSize, this.gameScreen, 900, 400))
         this.foods.push(new Food(this.gameSize, this.gameScreen, 1400, 350))
-        this.foods.push(new Food(this.gameSize, this.gameScreen, 2100, 400))
-        this.foods.push(new Food(this.gameSize, this.gameScreen, 800, 200))
-        this.foods.push(new Food(this.gameSize, this.gameScreen, 900, 500))
-        this.foods.push(new Food(this.gameSize, this.gameScreen, 1000, 500))
-        this.foods.push(new Food(this.gameSize, this.gameScreen, 1200, 200))
-        this.foods.push(new Food(this.gameSize, this.gameScreen, 1250, 300))
-        this.foods.push(new Food(this.gameSize, this.gameScreen, 1350, 400))
-        this.foods.push(new Food(this.gameSize, this.gameScreen, 1450, 500))
-        this.foods.push(new Food(this.gameSize, this.gameScreen, 1550, 400))
-        this.foods.push(new Food(this.gameSize, this.gameScreen, 1750, 300))
-        this.foods.push(new Food(this.gameSize, this.gameScreen, 1950, 400))
+        this.foods.push(new Food(this.gameSize, this.gameScreen, 2300, 400))
+        this.foods.push(new Food(this.gameSize, this.gameScreen, 2400, 100))
+        this.foods.push(new Food(this.gameSize, this.gameScreen, 2750, 325))
+        this.foods.push(new Food(this.gameSize, this.gameScreen, 3100, 100))
+        this.foods.push(new Food(this.gameSize, this.gameScreen, 3500, 200))
+        this.foods.push(new Food(this.gameSize, this.gameScreen, 3950, 300))
+        this.foods.push(new Food(this.gameSize, this.gameScreen, 4400, 200))
+        this.foods.push(new Food(this.gameSize, this.gameScreen, 4700, 0))
+        this.foods.push(new Food(this.gameSize, this.gameScreen, 5000, 400))
+        this.foods.push(new Food(this.gameSize, this.gameScreen, 5400, 645))
+
 
 
     },
@@ -119,7 +129,6 @@ const Game = {
         this.gameScreen.style.height = `${this.gameSize.h}px`
     },
     gameLoop() {
-        console.log("----", this.framesCounter)
         this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
 
         this.drawAll()
@@ -127,20 +136,33 @@ const Game = {
         if (this.player.isMoving && this.player.playerPos.l > this.gameSize.w / 2) {
 
             const positionPlayer = this.player.getPosition()
-            this.background.updatePos(positionPlayer)
+            this.background.goLeft(positionPlayer)
 
             this.vObs.forEach((e) => {
-                e.updatePos(positionPlayer)
+                e.goLeft(positionPlayer)
             })
             this.platforms.forEach((e) => {
-                e.updatePos(positionPlayer)
+                e.goLeft(positionPlayer)
             })
             this.foods.forEach((e) => {
-                e.updatePos(positionPlayer)
+                e.goLeft(positionPlayer)
             })
-
-
         }
+        if (this.player.isMoving && this.player.playerPos.l < 200) {
+            const positionPlayer = this.player.getPosition()
+            this.background.goRight(positionPlayer)
+
+            this.vObs.forEach((e) => {
+                e.goRight(positionPlayer)
+            })
+            this.platforms.forEach((e) => {
+                e.goRight(positionPlayer)
+            })
+            this.foods.forEach((e) => {
+                e.goRight(positionPlayer)
+            })
+        }
+        this.winner()
         window.requestAnimationFrame(() => this.gameLoop())
         this.isCollision()
 
@@ -156,6 +178,7 @@ const Game = {
                     break;
                 case this.keys.moveL.code:
                     this.keys.moveL.pressed = true
+                    this.player.startMoving()
                     break;
                 case this.keys.jump.code:
                     this.player.jump()
@@ -170,6 +193,7 @@ const Game = {
                     break;
                 case this.keys.moveL.code:
                     this.keys.moveL.pressed = false
+                    this.player.stopMoving()
                     break;
             }
 
@@ -180,6 +204,8 @@ const Game = {
         this.player.move(this.keys)
         this.background.move()
         this.player.moveFrames(this.framesCounter)
+
+
 
     },
 
@@ -209,7 +235,7 @@ const Game = {
             }
             )
             ,
-            this.foods.forEach((e) => {
+            this.foods.forEach((e, idx) => {
 
                 if (this.player.playerPos.l <= e.foodPos.l + e.foodSize.w &&
                     this.player.playerPos.l + this.player.playerSize.w >= e.foodPos.l &&
@@ -218,11 +244,18 @@ const Game = {
 
                 ) {
                     e.foodElement.remove()
-                    this.foods.slice(e, 1)
-                    this.counterPoints++;
-                    console.log(this.counterPoints)
+                    this.foods.splice(idx, 1)
+                    this.scoreCounter++
+
+                    this.score.updateStyle()
                 }
             })
+    },
+
+    winner() {
+        if (this.foods.length === 0) {
+            alert("meeeeeeeeeeeeeeeep :)")
+        }
     },
 
     gameOver() {

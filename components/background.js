@@ -16,6 +16,10 @@ class Background {
             l: gameSize.w,
             t: 0
         }
+        this.backgroundPos3 = {
+            l: -gameSize.w,
+            t: 0
+        }
         // this.backgroundSize2 = {
         //     w: gameSize.w,
         //     h: gameScreen.h
@@ -50,30 +54,58 @@ class Background {
         this.backgroundElement2.style.top = `${this.backgroundPos2.t}px`
 
         this.gameScreen.appendChild(this.backgroundElement2)
+
+        this.backgroundElement3 = document.createElement("img")
+        this.backgroundElement3.src = "./img/bg2.jpg"
+
+        this.backgroundElement3.style.position = "absolute"
+        this.backgroundElement3.style.width = `${this.backgroundSize.w}px`
+        this.backgroundElement3.style.height = `${this.backgroundSize.h}px`
+        this.backgroundElement3.style.left = `${this.backgroundPos3.l}px`
+        this.backgroundElement3.style.top = `${this.backgroundPos3.t}px`
+
+        this.gameScreen.appendChild(this.backgroundElement3)
     }
 
     move() {
         if (this.backgroundPos.l <= -this.backgroundSize.w) {
             this.backgroundPos.l = 0
             this.backgroundPos2.l = this.backgroundSize.w
+            this.backgroundPos3.l = -this.backgroundSize.w
         }
         this.updatePosition()
     }
 
-    updatePos(playerPos) {
+    goLeft(playerPos) {
+
 
         if (playerPos > this.gameSize.w / 2) {
             this.backgroundPos.l -= 3
             this.backgroundPos2.l -= 3
+            this.backgroundPos3.l -= 3
+        }
+        else {
+            this.backgroundPos.l = 0
+            this.backgroundPos2.l = 0
+            this.backgroundPos3.l = 0
+        }
+        this.updatePosition()
+    }
+    goRight(playerPos) {
+        if (playerPos < 200) {
+            this.backgroundPos.l += 3
+            this.backgroundPos2.l += 3
+            this.backgroundPos3.l += 3
         } else {
             this.backgroundPos.l = 0
             this.backgroundPos2.l = 0
-        }
-        this.updatePosition()
+            this.backgroundPos3.l = 0
+        } this.updatePosition()
     }
     updatePosition() {
         this.backgroundElement.style.left = `${this.backgroundPos.l}px`
         this.backgroundElement2.style.left = `${this.backgroundPos2.l}px`
+        this.backgroundElement3.style.left = `${this.backgroundPos3.l}px`
     }
 
 }

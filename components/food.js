@@ -43,7 +43,7 @@ class Food {
         this.gameScreen.appendChild(this.foodElement)
     }
 
-    updatePos(playerPos) {
+    goLeft(playerPos) {
 
         if (playerPos > this.gameSize.w / 2) {
             this.foodPos.l -= 7
@@ -51,6 +51,14 @@ class Food {
             this.foodPos.l = 0
         }
         this.updatePosition()
+
+    }
+    goRight(playerPos) {
+        if (playerPos < 200) {
+            this.foodPos.l += 7
+        } else {
+            this.foodPos.l = 0
+        } this.updatePosition()
     }
     updatePosition() {
         this.foodElement.style.left = `${this.foodPos.l}px`

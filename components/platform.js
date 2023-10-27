@@ -46,7 +46,7 @@ class Platform {
 
         this.gameScreen.appendChild(this.platformElement)
     }
-    updatePos(playerPos) {
+    goLeft(playerPos) {
 
 
         if (playerPos > this.gameSize.w / 2) {
@@ -55,6 +55,13 @@ class Platform {
             this.platformPos.l = 0
         }
         this.updatePosition()
+    }
+    goRight(playerPos) {
+        if (playerPos < 200) {
+            this.platformPos.l += 7
+        } else {
+            this.platformPos.l = 0
+        } this.updatePosition()
     }
     updatePosition() {
         this.platformElement.style.left = `${this.platformPos.l}px`

@@ -7,12 +7,12 @@ class Player {
         this.playerSize = {
             w: 60,
             h: 60
-        },
-            this.playerPos = {
-                l: 50,
-                t: this.gameSize.h - this.playerSize.h - 100,
-                //base: this.gameSize.h - this.playerSize.h - 130
-            }
+        }
+        this.playerPos = {
+            l: 210,
+            t: this.gameSize.h - this.playerSize.h - 100,
+            //base: this.gameSize.h - this.playerSize.h - 130
+        }
 
         this.playerVel = {
             l: 0,
@@ -75,15 +75,18 @@ class Player {
     }
     animateSprite(framesCounter) {
 
-        if (framesCounter % this.playerSprite.frameSpeed == 0) {
-            this.playerSprite.currentFrame++
-        }
-        if (this.playerSprite.currentFrame >= this.playerSprite.totalFrames) {
+        if (this.startMoving === true) {
+            if (framesCounter % this.playerSprite.frameSpeed == 0) {
+                this.playerSprite.currentFrame++
+            }
+            if (this.playerSprite.currentFrame >= this.playerSprite.totalFrames) {
+                this.playerSprite.currentFrame = 0
+            }
+
+        } else {
             this.playerSprite.currentFrame = 0
         }
         this.playerSprite.backgroundPositionX = -this.playerSize.h * this.playerSprite.currentFrame
-
-
         this.updateSprite()
     }
     updateSprite() {
@@ -109,7 +112,7 @@ class Player {
 
     }
     moveLeft() {
-        if (this.playerPos.l >= 0) {
+        if (this.playerPos.l > 190) {
             this.playerPos.l -= 5
             this.playerVel.l -= 15
         }
