@@ -75,17 +75,15 @@ class Player {
     }
     animateSprite(framesCounter) {
 
-        if (this.startMoving === true) {
-            if (framesCounter % this.playerSprite.frameSpeed == 0) {
-                this.playerSprite.currentFrame++
-            }
-            if (this.playerSprite.currentFrame >= this.playerSprite.totalFrames) {
-                this.playerSprite.currentFrame = 0
-            }
 
-        } else {
+        if (framesCounter % this.playerSprite.frameSpeed == 0) {
+            this.playerSprite.currentFrame++
+        }
+        if (this.playerSprite.currentFrame >= this.playerSprite.totalFrames) {
             this.playerSprite.currentFrame = 0
         }
+
+
         this.playerSprite.backgroundPositionX = -this.playerSize.h * this.playerSprite.currentFrame
         this.updateSprite()
     }
